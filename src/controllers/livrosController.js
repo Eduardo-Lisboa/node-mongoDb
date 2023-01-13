@@ -73,7 +73,6 @@ class LivroController {
 
     static async searchLivro(req, res) {
         const livro = await livros.findById(req.params.id);
-        
         if (livro == null) {
             return res.status(404).json({ message: "Livro não encontrado" });
         }
