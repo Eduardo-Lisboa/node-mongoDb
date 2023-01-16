@@ -8,5 +8,6 @@ router.post("/livros", LivroController.createLivro);
 router.put("/livros/:id", LivroController.updateLivro);
 router.get("/livros/:id", LivroController.searchLivro);
 router.delete("/livros/:id", LivroController.deleteLivro);
+router.get("/livros/buscar", LivroController.searchLivroByEditora);
 
 export default router;

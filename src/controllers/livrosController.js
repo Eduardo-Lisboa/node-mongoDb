@@ -3,7 +3,7 @@ import livros from "../models/livro.js";
 class LivroController {
     static async listLivros(req, res) {
         try {
-            const livrosList = await livros.find();
+            const livrosList = await livros.find().populate("autor");
             res.status(200).json(livrosList);
         } catch (err) {
             res.status(500).json({ message: err.message });
@@ -72,11 +72,21 @@ class LivroController {
     }
 
     static async searchLivro(req, res) {
-        const livro = await livros.findById(req.params.id);
+        const livro = await livros
+            .findById(req.params.id)
+            .populate("autor", "nome");
         if (livro == null) {
             return res.status(404).json({ message: "Livro não encontrado" });
         }
         res.status(200).json(livro);
+    }
+
+    static async searchLivroByEditora(req, res) {
+        const editora = req.query.editora;
+
+        livros.find({ editora: editora }, {}, (err, livros) => {
+            res.status(200).json(livros);
+        });
     }
 }
 
